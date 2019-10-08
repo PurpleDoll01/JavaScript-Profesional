@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Prototype</title>
+</head>
+<body>
+    <a href="ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+    
+    <script>
+
+      //vieja escuela  
+
+      const zelda =  {
+        name: "Zelda"
+      } 
+
+      zelda.saludar = function () {
+          console.log(`Hola, soy ${this.name}`);
+      }
+
+      zelda.saludar();
+
+
+      const link =  {
+          name: "Link"
+      } 
+
+      link.saludar = function () {
+          console.log(`Hola, soy ${this.name}`);
+      }
+
+      link.saludar();
+
+
+      //Más eficiente
+      function Hero (name) {
+        const hero = {
+            name: name 
+        }  
+
+        hero.saludar = function () {
+          console.log(`Hola, soy ${this.name}`);
+        };
+
+        return hero;
+      }
+
+      const zeldi = Hero("Zelda");
+      zeldi.saludar();
+
+      const linki = Hero ("Link");
+      linki.saludar();
+
+
+      //Todavía más eficiente
+      const heroMethods = {
+        saludar: function () {
+          console.log(`Me llamo ${this.name}`);
+        },
+      }
+
+      function Heroes(name) {
+          const hero = {
+              name: name, 
+          };
+
+          hero.saludar = heroMethods.saludar; 
+          return hero;
+      }
+
+      const zeldii = Heroes("Zelda");
+      zeldii.saludar();
+
+
+      //Object.create
+
+      function Heroes2(name) {
+          const hero = Object.create(heroMethods)
+          hero.name = name;
+
+          return hero;
+      }
+
+      const zeld3 = Heroes("Zelda");
+      zeld3.saludar();
+
+      
+      //Los métodos de Hero dentro de Hero
+
+      function Heroes3(name) {
+          const hero = Object.create(Heroes3.prototype);
+          hero.name = name;
+
+          return hero;
+      }
+
+      Heroes3.prototype.saludar = function () {
+          console.log(`Soy genial, me llamo ${this.name}`);
+        }
+
+      const zeld4 = Heroes3("Zelda");
+      zeld4.saludar();
+
+
+      
+      // new es un atajo (azucar sintáctico)
+      function Heroes4(name) {
+          this.name = name;
+      }
+
+      Heroes4.prototype.saludar = function () {
+          console.log(`New: ${this.name}`);
+        }
+
+      const zeld5 = new Heroes4("Zelda");
+      zeld5.saludar();
+
+
+
+        
+
+    </script>
+</body>
+</html>
